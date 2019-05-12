@@ -17,7 +17,6 @@ class Executor(Resource):
         self.gameboard = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]];
 
     def create_board(self):
-        print('addnumber')
         number_to_add = random.choice([2,4])
         number_added = 0
         while number_added < 2:
@@ -60,7 +59,6 @@ class Executor(Resource):
         for i, row in enumerate(self.gameboard):
             merged_index = -1
             for j, cell in enumerate(row):
-                print(row , ':', cell , '=', self.gameboard[i][j])
                 if(self.gameboard[i][j] != 0):
                     k = j
                     while k > 0 and (merged_index == -1 or k > merged_index + 1) and (self.gameboard[i][k - 1] == 0 or self.gameboard[i][k - 1] == self.gameboard[i][j]) :
@@ -78,7 +76,6 @@ class Executor(Resource):
         for i, row in enumerate(self.gameboard):
             merged_index = -1
             for j, cell in reversed(list(enumerate(row))):
-                print(row , ':', cell , '=', self.gameboard[i][j])
                 if(self.gameboard[i][j] != 0):
                     k = j
                     while k < len(row) - 1 and (merged_index == -1 or k < merged_index - 1) and (self.gameboard[i][k + 1] == 0 or self.gameboard[i][k + 1] == self.gameboard[i][j]) :
@@ -92,7 +89,6 @@ class Executor(Resource):
         return was_legal_move
 
     def add_random_number(self):
-        print('addnumber')
         number_to_add = random.choice([2,4])
         number_added = False
         while not number_added:
@@ -127,7 +123,6 @@ class Executor(Resource):
         else:
             return False
 
-
 @app.route('/execute_key', methods=['POST'])
 @cross_origin(origin='*')
 def update_gameboard():
@@ -143,8 +138,6 @@ def update_gameboard():
 def create_board():
     executor.create_board()
     return json.dumps(executor.gameboard)
-
-
 
 executor = Executor(app)
 if __name__ == '__main__':
